@@ -9,3 +9,7 @@ nav {
 body {
     background-color: blue;
 }
+
+.pageTitle {
+    margin: 0;
+}
