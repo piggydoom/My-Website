@@ -1,15 +1,16 @@
-h1 {
-    color: hotpink;
-}
-
 nav {
-   background-color: darkgreen;
+    text-align: center;
+    height: 5%;
+    width: 100%;
+    background-color: darkgreen;
 }
 
 body {
     background-color: blue;
+    margin: 0%;
 }
 
 .pageTitle {
     margin: 0;
+    color: red;
 }
