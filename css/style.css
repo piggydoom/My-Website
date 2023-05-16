@@ -14,3 +14,8 @@ body {
     margin: 0;
     color: red;
 }
+
+#myCanvas {
+    width: 50%; 
+    height: 20%;
+}
