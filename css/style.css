@@ -18,4 +18,5 @@ body {
 #myCanvas {
     width: 50%; 
     height: 20%;
+    border: 10px dotted rgb(161, 24, 136);
 }
