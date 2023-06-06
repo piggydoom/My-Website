@@ -5,11 +5,14 @@
 //     ctx.drawImage(img, 10, 10);
 //   }; 
 
-window.onload = function() {
+window.onload = function () {
     let myCanvas = document.getElementById("myCanvas");
-    let ctx d= myCanvas.getContext("2d");
-    let tractor = new Image();
-    tractor.src = "../imgs/tractor.png";
-    tractor.onload= "function"
-    ctx.draw 
+    let ctx = myCanvas.getContext("2d");
+
+}
+
+let tractor = new Image();
+tractor.src = "../imgs/tractor.png";
+tractor.onload = function () {
+    ctx.drawImage(tractor, ctx.width / 2, ctx.height / 2, 50, 50);
 }
