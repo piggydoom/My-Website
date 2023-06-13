@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,11 +8,55 @@
     <title>FreakyTractor</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body onload="startGame()">
-<nav>
-<h1 class="pageTitle">freakyTractor</h1>
-</nav>
-<canvas id="myCanvas"></canvas>
+    <nav>
+        <h1 class="pageTitle">freakyTractor</h1>
+    </nav>
+    <canvas id="myCanvas" width="200" height="200" style="border: 1px solid orange"></canvas>
 </body>
-<script src="./js/script.js"></script>
+<script>
+    function startGame() {
+        let tractor;
+        let myCanvas = document.getElementById("myCanvas");
+        let ctx = myCanvas.getContext("2d");
+        ctx.globalCompositeOperation = 'destination-over'
+
+        let player = {
+            x: 50, y: 50, w: 10, h: 10
+        };
+
+
+
+        function redraw()
+
+        // //ctx.beginPath();
+
+        // ctx.fillStyle="purple";
+        // ctx.fillRect(63,13,53,43);
+        // ctx.strokeStyle="red";
+        // ctx.stroke();
+
+        // window.addEventListener("keyDown",moveRect,false);
+
+        // function moveRect(e){
+        //alert(e.keyCode);
+        //     if(keyDown == 65){
+        //         alert("you pressed a");
+        //     };
+        // };
+
+
+
+
+
+        //     // tractor = new Image();
+        //     tractor.src = "../imgs/tractor.png";
+        //     tractor.onload = function () {
+        //         ctx.drawImage(tractor, 50, 50, 50, 50);
+        //     }
+    };
+
+</script>
+
 </html>
