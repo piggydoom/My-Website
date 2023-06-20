@@ -38,16 +38,15 @@
 
         redraw();
 
-        window.addEventListener("keyDown", moveRect, false);
+        window.addEventListener("keydown", moveRect, false);
        
-        function moveRect(){
+        function moveRect(e){
             // alert(e.keyCode);
-            alert("test");
-            if (keyDown == 65) {
+            if (e.keyCode == 65) {
                 console.log("you pressed a");
-                // player.x += 15;
-                // redraw();
-                // console.log(player);
+                player.x += -15;
+                redraw();
+                console.log(player);
             };
         };
 
