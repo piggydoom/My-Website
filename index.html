@@ -28,23 +28,28 @@
 
 
 
-        function redraw()
+        function redraw() {
+            ctx.beginPath();
+            ctx.fillStyle = "purple";
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+            // ctx.strokeStyle = "red";
+            // ctx.stroke();
+        }
 
-        // //ctx.beginPath();
+        redraw();
 
-        // ctx.fillStyle="purple";
-        // ctx.fillRect(63,13,53,43);
-        // ctx.strokeStyle="red";
-        // ctx.stroke();
-
-        // window.addEventListener("keyDown",moveRect,false);
-
-        // function moveRect(e){
-        //alert(e.keyCode);
-        //     if(keyDown == 65){
-        //         alert("you pressed a");
-        //     };
-        // };
+        window.addEventListener("keyDown", moveRect, false);
+       
+        function moveRect(){
+            // alert(e.keyCode);
+            alert("test");
+            if (keyDown == 65) {
+                console.log("you pressed a");
+                // player.x += 15;
+                // redraw();
+                // console.log(player);
+            };
+        };
 
 
 
