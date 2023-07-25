@@ -23,14 +23,16 @@
         ctx.globalCompositeOperation = 'destination-over'
 
         let player = {
-            x: 50, y: 50, w: 10, h: 10
+            x: myCanvas.width / 2, y: myCanvas.height / 2, w: 10, h: 10
         };
 
 
 
         function redraw() {
             ctx.beginPath();
-            ctx.fillStyle = "purple";
+            ctx.fillStyle = "rbg(" + Math.floor(Math.random() * 255)
+                , Math.floor(Math.random() * 255)
+                , Math.floor(Math.random() * 255) + ")";
             ctx.fillRect(player.x, player.y, player.w, player.h);
             // ctx.strokeStyle = "red";
             // ctx.stroke();
@@ -39,15 +41,38 @@
         redraw();
 
         window.addEventListener("keydown", moveRect, false);
-       
-        function moveRect(e){
+
+        function moveRect(e) {
             // alert(e.keyCode);
             if (e.keyCode == 65) {
                 console.log("you pressed a");
+                // player.
                 player.x += -15;
                 redraw();
                 console.log(player);
             };
+
+            if (e.keyCode == 68) {
+                console.log("you pressed d");
+                player.x += 15;
+                redraw();
+                console.log(player);
+            };
+
+            if (e.keyCode == 87) {
+                console.log("you pressed w");
+                player.y += -15;
+                redraw();
+                console.log(player);
+            };
+
+            if (e.keyCode == 83) {
+                console.log("you pressed s");
+                player.y += 15;
+                redraw();
+                console.log(player);
+            };
+
         };
 
 
