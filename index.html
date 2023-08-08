@@ -9,82 +9,93 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body onload="startGame()">
+<body>
     <nav>
         <h1 class="pageTitle">freakyTractor</h1>
     </nav>
-    <canvas id="myCanvas" width="200" height="200" style="border: 1px solid orange"></canvas>
+    <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
 </body>
 <script>
-    function startGame() {
-        let tractor;
-        let myCanvas = document.getElementById("myCanvas");
-        let ctx = myCanvas.getContext("2d");
-        ctx.globalCompositeOperation = 'destination-over'
-
-        let player = {
-            x: myCanvas.width / 2, y: myCanvas.height / 2, w: 10, h: 10
-        };
+    const myCanvas = document.getElementById("myCanvas");
+    const ctx = myCanvas.getContext("2d");
+    const tractorImg = new Image;
+    tractorImg.src = "./imgs/tractor.png";
+    myCanvas.width = window.innerWidth;
+    myCanvas.height = window.innerHeight;
 
 
-
-        function redraw() {
-            ctx.beginPath();
-            ctx.fillStyle = "rbg(" + Math.floor(Math.random() * 255)
-                , Math.floor(Math.random() * 255)
-                , Math.floor(Math.random() * 255) + ")";
-            ctx.fillRect(player.x, player.y, player.w, player.h);
-            // ctx.strokeStyle = "red";
-            // ctx.stroke();
-        }
-
-        redraw();
-
-        window.addEventListener("keydown", moveRect, false);
-
-        function moveRect(e) {
-            // alert(e.keyCode);
-            if (e.keyCode == 65) {
-                console.log("you pressed a");
-                // player.
-                player.x += -15;
-                redraw();
-                console.log(player);
-            };
-
-            if (e.keyCode == 68) {
-                console.log("you pressed d");
-                player.x += 15;
-                redraw();
-                console.log(player);
-            };
-
-            if (e.keyCode == 87) {
-                console.log("you pressed w");
-                player.y += -15;
-                redraw();
-                console.log(player);
-            };
-
-            if (e.keyCode == 83) {
-                console.log("you pressed s");
-                player.y += 15;
-                redraw();
-                console.log(player);
-            };
-
-        };
-
-
-
-
-
-        //     // tractor = new Image();
-        //     tractor.src = "../imgs/tractor.png";
-        //     tractor.onload = function () {
-        //         ctx.drawImage(tractor, 50, 50, 50, 50);
-        //     }
+    let player = {
+        x: myCanvas.width / 2, y: myCanvas.height / 2, w: 10, h: 10
     };
+    function init() {
+        window.requestAnimationFrame(draw);
+    }
+
+
+    function draw() {
+
+
+        ctx.globalCompositeOperation = 'destination-over';
+
+
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        redraw();
+        ctx.drawImage(tractorImg, 50, 100);
+
+
+        window.requestAnimationFrame(draw);
+    };
+
+    function redraw() {
+        ctx.beginPath();
+        ctx.fillRect(player.x, player.y, player.w, player.h);
+        ctx.strokeStyle = "red";
+        ctx.stroke();
+    };
+
+
+    window.addEventListener("keydown", moveRect, false);
+
+    function moveRect(e) {
+        // alert(e.keyCode);
+        if (e.keyCode == 65) {
+            console.log("you pressed a");
+            // player.
+            player.x += -15;
+            // redraw();
+            console.log(player);
+        };
+
+        if (e.keyCode == 68) {
+            console.log("you pressed d");
+            player.x += 15;
+            // redraw();
+            console.log(player);
+        };
+
+        if (e.keyCode == 87) {
+            console.log("you pressed w");
+            player.y += -15;
+            // redraw();
+            console.log(player);
+        };
+
+        if (e.keyCode == 83) {
+            console.log("you pressed s");
+            player.y += 15;
+            // redraw();
+            console.log(player);
+        };
+
+    };
+
+
+
+    init();
+
+
+
+
 
 </script>
 
