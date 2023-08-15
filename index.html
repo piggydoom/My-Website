@@ -18,6 +18,7 @@
     <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
 </body>
 <script>
+    // VARIABLES
     const myCanvas = document.getElementById("myCanvas");
     const ctx = myCanvas.getContext("2d");
     const tractorImg = new Image;
@@ -26,18 +27,16 @@
     myCanvas.height = window.innerHeight;
     const particlesArray = [];
     ctx.globalCompositeOperation = 'destination-over';
-
-
-
-
+    let hue = 0;
 
     let player = {
         x: myCanvas.width / 2, y: myCanvas.height / 2, w: 10, h: 10
     };
-    function init() {
-        window.requestAnimationFrame(draw);
-    }
 
+    // END VARIABLES
+
+
+    // MAKE PARTICLE CLASS
     class Particles {
         constructor() {
             this.x = 100;
@@ -60,6 +59,13 @@
             ctx.fill();
         }
     } // end Particle
+
+
+    //INITIALISE CANVAS ANIMATION
+    function init() {
+        window.requestAnimationFrame(draw);
+    }
+
     function handleParticles() {
         for (let i = 0; i < particlesArray.length; i++) {
             particlesArray[i].update();
@@ -72,17 +78,13 @@
     } // end of function
 
 
+
+    //  ANIMATE STUFF
     function draw() {
-
-
-
-
-
         ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
         redraw();
         ctx.drawImage(tractorImg, 50, 100);
-        handleParticles()
-
+        handleParticles();
         window.requestAnimationFrame(draw);
     };
 
