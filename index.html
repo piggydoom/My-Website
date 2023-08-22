@@ -18,49 +18,41 @@
     <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
 </body>
 <script>
-    // VARIABLES
+    // CANVAS VARIABLES
     const myCanvas = document.getElementById("myCanvas");
     const ctx = myCanvas.getContext("2d");
-    const tractorImg = new Image;
-    tractorImg.src = "./imgs/tractor.png"; 
-    const playersprite = new Image;
-    playersprite.src = "./imgs/player.png";
     myCanvas.width = window.innerWidth;
     myCanvas.height = window.innerHeight;
-    // const particlesArray = [];
     ctx.globalCompositeOperation = 'destination-over';
-    let hue = 0;
+    
+    // Tractor variables
+    const tractorImg = new Image;
+    tractorImg.src = "./imgs/tractor.png"; 
+
+    // Player variables
+    const playersprite = new Image;
+    playersprite.src = "./imgs/player.png";
     const FACING_RIGHT = 0;
     const FACING_LEFT = 1;
     const WIDTH = 32;
     const HEIGHT = 32;
-    const SCALE = 1;
+    const SCALE = 3;
     const SCALED_WIDTH = SCALE * WIDTH;
     const SCALED_HEIGHT = SCALE * HEIGHT;
+
 
     let player = {
         x: myCanvas.width / 2, y: myCanvas.height / 2, w: 10, h: 10
     };
 
 
-    function drawplayer(framex,framey,canvasx,canasy) {
-        ctx.drawImage(playersprite,framex*WIDTH,framey*HEIGHT,WIDTH,HEIGHT,player.x,player.y,SCALE WIDTH, )
-    };
 
-    
-    function draw() {
+
+    function animate() {
         ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-        redraw();
         ctx.drawImage(tractorImg, 50, 100);
-        handleParticles();
+        drawplayer(0,0, player.x, player.y);
         window.requestAnimationFrame(draw);
-    };
-
-    function redraw() {
-        ctx.beginPath();
-        ctx.fillRect(player.x, player.y, player.w, player.h);
-        ctx.strokeStyle = "red";
-        ctx.stroke();
     };
 
 
@@ -100,70 +92,24 @@
     };
 
 
-
     init();
 
 
+    function drawplayer(framex,framey,canvasx,canasy) {
+        ctx.drawImage(playersprite,
+        framex*WIDTH,framey*HEIGHT,
+        WIDTH,HEIGHT,
+        player.x,player.y,
+        SCALED_WIDTH, SCALED_HEIGHT);
+    };
 
 
 
     //INITIALISE CANVAS ANIMATION
     function init() {
-        window.requestAnimationFrame(draw);
+        window.requestAnimationFrame(animate);
     }
 
-
-
-
-// END VARIABLES
-
-
-    // MAKE PARTICLE CLASS
-    // class Particles {
-    //     constructor() {
-    //         this.x = 100;
-    //         this.y = 100;
-    //         this.size = Math.random() * 10 + 1;
-    //         this.speedX = Math.random() * 3 - 1.5;
-    //         this.speedY = Math.random() * 3 - 1.5;
-    //     }
-        // update() {
-        //     this.x += this.speedX;
-        //     this.y += this.speedY;
-        //     if (this.size > .3) {
-        //         this.size -= .1;
-        //     }
-        // }
-        // draw() {
-        //     ctx.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
-        //     ctx.beginPath();
-        //     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        //     ctx.fill();
-    //     }
-    // // } // end Particle
-
-
-    // function handleParticles() {
-    //     for (let i = 0; i < particlesArray.length; i++) {
-    //         particlesArray[i].update();
-    //         particlesArray[i].draw();
-    //         if (particlesArray[i].size <= .3) {
-    //             particlesArray.splice(i, 1);
-    //             i--;
-    //         }
-    //     }
-    // } // end of function
-
-
-
-    //  ANIMATE STUFF
-
-//     function particlesize(i) {
-//         for (i; i < 5; i++) {
-//             particlesArray.push(new Particles());
-//         }
-//     };
-//  particlesize(100);
 
 </script>
 
