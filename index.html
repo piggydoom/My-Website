@@ -12,8 +12,10 @@
 <body>
     <nav>
         <h1 class="pageTitle">freakyTractor</h1>
-        <a href="index.html">home</a>
-        <a href="freakytractor.html">freakyTractor</a>
+        <ul>
+            <li><a href="index.html">home</a></li>
+            <li><a href="freakytractor.html">freakyTractor</a></li>
+        </ul>
     </nav>
     <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
 </body>
@@ -24,10 +26,10 @@
     myCanvas.width = window.innerWidth;
     myCanvas.height = window.innerHeight;
     ctx.globalCompositeOperation = 'destination-over';
-    
+
     // Tractor variables
     const tractorImg = new Image;
-    tractorImg.src = "./imgs/tractor.png"; 
+    tractorImg.src = "./imgs/tractor.png";
 
     // Player variables
     const playersprite = new Image;
@@ -51,7 +53,7 @@
     function animate() {
         ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
         ctx.drawImage(tractorImg, 50, 100);
-        drawplayer(0,1 /* change to 1 or 0 to change direction*/, player.x, player.y);
+        drawplayer(0, 1 /* change to 1 or 0 to change direction*/, player.x, player.y);
         window.requestAnimationFrame(animate);
     };
 
@@ -95,12 +97,12 @@
     init();
 
 
-    function drawplayer(framex,framey,canvasx,canasy) {
+    function drawplayer(framex, framey, canvasx, canasy) {
         ctx.drawImage(playersprite,
-        framex*WIDTH,framey*HEIGHT,
-        WIDTH,HEIGHT,
-        player.x,player.y,
-        SCALED_WIDTH, SCALED_HEIGHT);
+            framex * WIDTH, framey * HEIGHT,
+            WIDTH, HEIGHT,
+            player.x, player.y,
+            SCALED_WIDTH, SCALED_HEIGHT);
     };
 
 
