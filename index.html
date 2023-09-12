@@ -41,10 +41,21 @@
     const SCALE = 3;
     const SCALED_WIDTH = SCALE * WIDTH;
     const SCALED_HEIGHT = SCALE * HEIGHT;
+    const STEP_LOOP = [0, 1];
+    let currentLoopIndex = 0;
+    let frameCount = 0;
+    let currentDirection = 0;
+    let playerDirection = 0;
+
+    //gamephysics
+    const gravity = 0.05;
+    let gravitySpeed = 0;
+
+    
 
 
     let player = {
-        x: myCanvas.width / 2, y: myCanvas.height / 2, w: 10, h: 10
+        x: myCanvas.width / 2, y: myCanvas.height / 2, xSpeed : 0, ySpeed : 0
     };
 
 
@@ -53,25 +64,39 @@
     function animate() {
         ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
         ctx.drawImage(tractorImg, 50, 100);
-        drawplayer(0, 1 /* change to 1 or 0 to change direction*/, player.x, player.y);
+
+
+        drawplayer(STEP_LOOP[currentLoopIndex], playerDirection);
+        currentLoopIndex++;
+
+        if (currentLoopIndex >= STEP_LOOP.length) {
+            currentLoopIndex = 0;
+        }
+
+
         window.requestAnimationFrame(animate);
     };
 
 
-    window.addEventListener("keydown", moveRect, false);
+    window.addEventListener("keydown", movePlayer);
+    window.addEventListener("keyup", resetDirection );
 
-    function moveRect(e) {
+
+    function resetDirection(){
+       playerDirection = 2;
+    };
+    function movePlayer(e) {
         // alert(e.keyCode);
         if (e.keyCode == 65) {
             console.log("you pressed a");
-            // player.
+            playerDirection =  0;
             player.x += -15;
-            // redraw();
             console.log(player);
         };
 
         if (e.keyCode == 68) {
             console.log("you pressed d");
+            playerDirection = 1;
             player.x += 15;
             // redraw();
             console.log(player);
@@ -79,6 +104,7 @@
 
         if (e.keyCode == 87) {
             console.log("you pressed w");
+            playerDirection = 3;
             player.y += -15;
             // redraw();
             console.log(player);
@@ -86,18 +112,20 @@
 
         if (e.keyCode == 83) {
             console.log("you pressed s");
+            playerDirection = 2;
             player.y += 15;
             // redraw();
             console.log(player);
         };
 
+        
     };
 
 
     init();
 
 
-    function drawplayer(framex, framey, canvasx, canasy) {
+    function drawplayer(framex, framey) {
         ctx.drawImage(playersprite,
             framex * WIDTH, framey * HEIGHT,
             WIDTH, HEIGHT,
