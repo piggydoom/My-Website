@@ -37,27 +37,40 @@
                 xPos: myCanvas.width / 2,
                 yPos: myCanvas.height / 2
             }
-            this.img = new Image
+            this.img = new Image()
             this.img.src = "./imgs/player.png"
             this.width = 35
             this.height = 35
 
         this.scale = 3
-        this.scaledWidth = scale * width
-        this.scaledHeight = scale * height
+        this.scaledWidth = this.scale * this.width
+        this.scaledHeight = this.scale * this.height
         // this.playerDirection = 0
         // this.steploop = [0,1,2]
         }
         draw(frameX, frameY) {
-            drawImage(this.img, frameX, frameY, this.width, this.height, this.xPos, this.yPos, this.scaledWidth, this.scaledHeight);
+            ctx.drawImage(
+                //image being used
+                this.img,
+                //xposition on image
+                frameX,
+                //yposition on image
+                frameY, this.width, this.height, this.xPos, this.yPos, this.scaledWidth, this.scaledHeight);
 
 
         }
     }
 
+    var img = new Image();
+    img.src = "./imgs/player.png";
+    // const player = new Player();
+    // player.draw(0,0);
+    ctx.drawImage(img,100,100);
+    ctx.beginPath();
+    ctx.rect(10,30,20,20);
+    ctx.stroke();
 
-    const player = new Player();
-    player.draw(0,0);
+
 </script>
 
 </html>
