@@ -28,7 +28,23 @@
     ctx.globalCompositeOperation = 'destination-over';
 
 
+    const playerImage = new Image();
+    playerImage.src = "./imgs/player.png";
+    playerImage.onload = function () {
+        window.requestAnimationFrame(step);
+    };
 
+
+    function step() {
+
+        //animationloop
+
+        window.requestAnimationFrame(step);
+        player.draw(0, 0);
+
+    }
+
+    
 
     //player
     class Player {
@@ -42,11 +58,11 @@
             this.width = 35
             this.height = 35
 
-        this.scale = 3
-        this.scaledWidth = this.scale * this.width
-        this.scaledHeight = this.scale * this.height
-        // this.playerDirection = 0
-        // this.steploop = [0,1,2]
+            this.scale = 3
+            this.scaledWidth = this.scale * this.width
+            this.scaledHeight = this.scale * this.height
+            // this.playerDirection = 0
+            // this.steploop = [0,1,2]
         }
         draw(frameX, frameY) {
             ctx.drawImage(
@@ -61,14 +77,7 @@
         }
     }
 
-    var img = new Image();
-    img.src = "./imgs/player.png";
-    // const player = new Player();
-    // player.draw(0,0);
-    ctx.drawImage(img,100,100);
-    ctx.beginPath();
-    ctx.rect(10,30,20,20);
-    ctx.stroke();
+
 
 
 </script>
