@@ -23,8 +23,10 @@
     // CANVAS VARIABLES
     const myCanvas = document.getElementById("myCanvas");
     const ctx = myCanvas.getContext("2d");
+
     myCanvas.width = window.innerWidth;
     myCanvas.height = window.innerHeight;
+    
     ctx.globalCompositeOperation = 'destination-over';
 
 
@@ -77,7 +79,23 @@
         }
     }
 
+<<<<<<< HEAD
 
+=======
+    var img = new Image();
+    img.src = "./imgs/player.png";
+    img.onload = () => {
+            ctx.drawImage(img, 0, 0);
+        };
+    // const player = new Player();
+    // player.draw(0,0);
+
+    // ctx.drawImage(img,100,100);
+    // ctx.beginPath();
+    // ctx.fillStyle = "blue";
+    // ctx.fillRect(100,300,200,200);
+    // ctx.stroke();
+>>>>>>> 6efc652c31672424772abb715922911f05e6988b
 
 
 </script>
