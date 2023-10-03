@@ -1,92 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FreakyTractor</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
 
-<body>
+  <body>
     <nav>
-        <h1 class="pageTitle">freakyTractor</h1>
-        <ul>
-            <li><a href="index.html">home</a></li>
-            <li><a href="freakytractor.html">freakyTractor</a></li>
-        </ul>
+      <h1 class="pageTitle">freakyTractor</h1>
+      <ul>
+        <li><a href="index.html">home</a></li>
+        <li><a href="freakytractor.html">freakyTractor</a></li>
+      </ul>
     </nav>
     <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
-</body>
-<script>
+  </body>
+  <script>
     // CANVAS VARIABLES
     const myCanvas = document.getElementById("myCanvas");
     const ctx = myCanvas.getContext("2d");
 
     myCanvas.width = window.innerWidth;
     myCanvas.height = window.innerHeight;
-    
-    ctx.globalCompositeOperation = 'destination-over';
 
+    ctx.globalCompositeOperation = "destination-over";
 
     const playerImage = new Image();
     playerImage.src = "./imgs/player.png";
     playerImage.onload = function () {
-        window.requestAnimationFrame(step);
+      //player
+      function Player() {
+        (this.xPos = myCanvas.width / 2),
+          (this.yPos = myCanvas.height / 2),
+          (this.img = playerImage);
+        this.width = 35;
+        this.height = 35;
+
+        this.scale = 3;
+        this.scaledWidth = this.scale * this.width;
+        this.scaledHeight = this.scale * this.height;
+        // this.playerDirection = 0
+        // this.steploop = [0,1,2]
+      }
+
+      Player.prototype.draw = function () {
+        ctx.drawImage(
+          //image being used
+          this.img,
+          //xposition on image
+          0,
+          0,
+          //yposition on image
+          this.width,
+          this.height,
+          this.xPos,
+          this.yPos,
+          this.scaledWidth,
+          this.scaledHeight
+        );
+      };
+
+      const player = new Player();
+      //animationloop
+      function animate() {
+        window.requestAnimationFrame(animate);
+        player.draw(100, 100);
+
+        ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.fillRect(100, 300, 200, 200);
+        ctx.stroke();
+      }
+
+      window.requestAnimationFrame(animate);
     };
 
-
-    function step() {
-
-        //animationloop
-
-        window.requestAnimationFrame(step);
-        player.draw(0, 0);
-
-    }
-
-    
-
-    //player
-    class Player {
-        constructor() {
-            this.position = {
-                xPos: myCanvas.width / 2,
-                yPos: myCanvas.height / 2
-            }
-            this.img = new Image()
-            this.img.src = "./imgs/player.png"
-            this.width = 35
-            this.height = 35
-
-            this.scale = 3
-            this.scaledWidth = this.scale * this.width
-            this.scaledHeight = this.scale * this.height
-            // this.playerDirection = 0
-            // this.steploop = [0,1,2]
-        }
-        draw(frameX, frameY) {
-            ctx.drawImage(
-                //image being used
-                this.img,
-                //xposition on image
-                frameX,
-                //yposition on image
-                frameY, this.width, this.height, this.xPos, this.yPos, this.scaledWidth, this.scaledHeight);
-
-
-        }
-    }
-
-<<<<<<< HEAD
-
-=======
-    var img = new Image();
-    img.src = "./imgs/player.png";
-    img.onload = () => {
-            ctx.drawImage(img, 0, 0);
-        };
     // const player = new Player();
     // player.draw(0,0);
 
@@ -95,9 +86,5 @@
     // ctx.fillStyle = "blue";
     // ctx.fillRect(100,300,200,200);
     // ctx.stroke();
->>>>>>> 6efc652c31672424772abb715922911f05e6988b
-
-
-</script>
-
+  </script>
 </html>
