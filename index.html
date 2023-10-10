@@ -30,7 +30,8 @@
   ctx.globalCompositeOperation = "destination-over";
 
   const gravity = { x: 0, y: 0.1 };
-
+  const ground = myCanvas.height;
+  const bounce = 0.9;
 
   const playerImage = new Image();
   playerImage.src = "./imgs/player.png";
@@ -75,6 +76,18 @@
         this.velocityY += gravity.y;
         this.posx += this.velocityX;
         this.posy += this.velocityY;
+        const g = ground - this.height;
+
+        if(this.posy >= g){
+          this.posy = g - (this.posy - ground - g);
+          this.velocityY = -Math.abs(this.velocityY) * bounce;
+          if(this.velocityY >= -gravity.y){
+            this.velocityY = 0;
+            this.posy = g - gravity.y;
+          }
+
+        }
+
       };
 
 
@@ -102,6 +115,7 @@
     //animationloop
     function animate() {
       window.requestAnimationFrame(animate);
+      ctx.clearRect(0,0, myCanvas.width, myCanvas.height);
       player.draw();
       player.gravity();
       ctx.beginPath();
