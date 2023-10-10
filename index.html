@@ -1,50 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FreakyTractor</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
 
-  <body>
-    <nav>
-      <h1 class="pageTitle">freakyTractor</h1>
-      <ul>
-        <li><a href="index.html">home</a></li>
-        <li><a href="freakytractor.html">freakyTractor</a></li>
-      </ul>
-    </nav>
-    <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
-  </body>
-  <script>
-    // CANVAS VARIABLES
-    const myCanvas = document.getElementById("myCanvas");
-    const ctx = myCanvas.getContext("2d");
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreakyTractor</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
 
-    myCanvas.width = window.innerWidth;
-    myCanvas.height = window.innerHeight;
+<body>
+  <nav>
+    <h1 class="pageTitle">freakyTractor</h1>
+    <ul>
+      <li><a href="index.html">home</a></li>
+      <li><a href="freakytractor.html">freakyTractor</a></li>
+    </ul>
+  </nav>
+  <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
+</body>
+<script>
+  // CANVAS VARIABLES
+  const myCanvas = document.getElementById("myCanvas");
+  const ctx = myCanvas.getContext("2d");
 
-    ctx.globalCompositeOperation = "destination-over";
+  myCanvas.width = window.innerWidth;
+  myCanvas.height = window.innerHeight;
 
-    const playerImage = new Image();
-    playerImage.src = "./imgs/player.png";
-    playerImage.onload = function () {
-      //player
-      function Player() {
-        (this.xPos = myCanvas.width / 2),
-          (this.yPos = myCanvas.height / 2),
-          (this.img = playerImage);
-        this.width = 35;
-        this.height = 35;
+  ctx.globalCompositeOperation = "destination-over";
 
-        this.scale = 3;
-        this.scaledWidth = this.scale * this.width;
-        this.scaledHeight = this.scale * this.height;
-        // this.playerDirection = 0
-        // this.steploop = [0,1,2]
-      }
+  const gravity = { x: 0, y: 0.1 };
+
+
+  const playerImage = new Image();
+  playerImage.src = "./imgs/player.png";
+  playerImage.onload = function () {
+    //player
+    function Player() {
+      this.posx = myCanvas.width / 2;
+      this.posy = myCanvas.height / 2;
+
+      this.img = playerImage;
+      this.width = 35;
+      this.height = 35;
+      this.velocityY = 0;
+      this.velocityX = 0;
+      this.scale = 3;
+      this.scaledWidth = this.scale * this.width;
+      this.scaledHeight = this.scale * this.height;
+      // this.playerDirection = 0
+      // this.steploop = [0,1,2]
+
 
       Player.prototype.draw = function () {
         ctx.drawImage(
@@ -56,51 +62,65 @@
           //yposition on image
           this.width,
           this.height,
-          this.xPos,
-          this.yPos,
+          this.posx,
+          this.posy,
           this.scaledWidth,
           this.scaledHeight
         );
       };
 
-
-      Player.prototype.update = function() {
-        document.addEventListener('keydown', function(){
-                if(e.keyCode ==65){
-                    this.xPos += -15;
-                 console.log("a key was presssed")
-                }
-                if (e.keyCode ==68){
-                    this.xPos += 15;
-                }
-            })}
-
-        };
+      Player.prototype.gravity = function () {
+        //gravity Handling
+        this.velocityX += gravity.x;
+        this.velocityY += gravity.y;
+        this.posx += this.velocityX;
+        this.posy += this.velocityY;
+      };
 
 
-      const player = new Player();
-      //animationloop
-      function animate() {
-        window.requestAnimationFrame(animate);
-        player.update();
-        player.draw();
+      Player.prototype.update = function () {
 
-        ctx.beginPath();
-        ctx.fillStyle = "blue";
-        ctx.fillRect(100, 300, 200, 200);
-        ctx.stroke();
+
+        //player.movement
+        addEventListener('keydown', (e) => {
+          if (e.keyCode == 65) {
+            this.xPos += -15;
+            console.log("a key was presssed")
+          }
+          if (e.keyCode == 68) {
+            this.xPos += 15;
+          }
+        })
       }
 
-      window.requestAnimationFrame(animate);
     };
 
-    // const player = new Player();
-    // player.draw(0,0);
 
-    // ctx.drawImage(img,100,100);
-    // ctx.beginPath();
-    // ctx.fillStyle = "blue";
-    // ctx.fillRect(100,300,200,200);
-    // ctx.stroke();
-  </script>
+    const player = new Player();
+    player.update();
+
+    //animationloop
+    function animate() {
+      window.requestAnimationFrame(animate);
+      player.draw();
+      player.gravity();
+      ctx.beginPath();
+      ctx.fillStyle = "blue";
+      ctx.fillRect(100, 300, 200, 200);
+      ctx.stroke();
+    }
+
+    window.requestAnimationFrame(animate);
+  };
+
+  // const player = new Player();
+  // player.draw(0,0);
+
+  // ctx.drawImage(img,100,100);
+  // ctx.beginPath();
+  // ctx.fillStyle = "blue";
+  // ctx.fillRect(100,300,200,200);
+  // ctx.stroke();
+</script>
+
 </html>
