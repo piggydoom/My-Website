@@ -53,7 +53,7 @@
       // this.steploop = [0,1,2]
 
 
-      Player.prototype.update = function () {
+      Player.prototype.draw = function () {
         ctx.drawImage(
           //image being used
           this.img,
@@ -68,7 +68,10 @@
           this.scaledWidth,
           this.scaledHeight
         );
+      };
 
+      Player.prototype.gravity = function () {
+        //gravity Handling
         this.velocityX += gravity.x;
         this.velocityY += gravity.y;
         this.posx += this.velocityX;
@@ -88,16 +91,17 @@
       };
 
 
-      Player.prototype.move = function () {
+      Player.prototype.update = function () {
+
 
         //player.movement
         addEventListener('keydown', (e) => {
           if (e.keyCode == 65) {
-            this.posx += -15;
+            this.xPos += -15;
             console.log("a key was presssed")
           }
           if (e.keyCode == 68) {
-            this.posx += 15;
+            this.xPos += 15;
           }
         })
       }
@@ -106,12 +110,14 @@
 
 
     const player = new Player();
-    player.move();
+    player.update();
 
     //animationloop
     function animate() {
       window.requestAnimationFrame(animate);
-      player.update();
+      ctx.clearRect(0,0, myCanvas.width, myCanvas.height);
+      player.draw();
+      player.gravity();
       ctx.beginPath();
       ctx.fillStyle = "blue";
       ctx.fillRect(100, 300, 200, 200);
