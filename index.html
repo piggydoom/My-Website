@@ -63,17 +63,19 @@
         );
       };
 
-            Player.prototype.update = function(){
-                addEventListener("keydown", (e) =>  {
-                    if(e.keycode ==65){
-                        this.xPos += -15;
-                     console.log("a key was presssed")   
-                    }
-                    if (e.keycode ==68){
-                        this.xPos+= 15;
-                    }
-                });
-            };
+
+      Player.prototype.update = function() {
+        document.addEventListener('keydown', function(){
+                if(e.keyCode ==65){
+                    this.xPos += -15;
+                 console.log("a key was presssed")
+                }
+                if (e.keyCode ==68){
+                    this.xPos += 15;
+                }
+            })}
+
+        };
 
 
       const player = new Player();
