@@ -45,7 +45,7 @@
         this.height = 32;
         this.speedY = 0;
         this.speedX = 0;
-        this.gravity = 0.05;
+        this.gravity =.1;
       this.gravitySpeed = 0;
         this.scale = 3;
         this.scaledWidth = this.scale * this.width;
@@ -92,11 +92,12 @@
           this.posy += this.speedY + this.gravitySpeed;
           this.hitBottom();
         };
-        Player.prototype.hitBottom = function () {
-          var rockbottom = myCanvas.height - this.scaledheight;
+        this.hitBottom = function () {
+          var rockbottom = myCanvas.height - this.scaledHeight;
+          console.log(myCanvas.height);
           if (this.posy > rockbottom) {
             this.posy = rockbottom;
-            this.gravitySpeed = -(this.gravitySpeed * this.bounce);
+            this.gravitySpeed = -(this.gravitySpeed * bounce);
           }
         };
 
@@ -109,6 +110,9 @@
             }
             if (e.keyCode == 68) {
               this.posx += 15;
+            }
+            if(e.keyCode == 87 && this.gravitySpeed == 0){
+                this.posy +=20;
             }
           });
         };
