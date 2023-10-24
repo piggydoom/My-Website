@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FreakyTractor</title>
     <link rel="stylesheet" href="/css/style.css" />
-  </head>
+</head>
 
-  <body>
+<body>
     <nav>
-      <h1 class="pageTitle">freakyTractor</h1>
-      <ul>
-        <li><a href="index.html">home</a></li>
-        <li><a href="freakytractor.html">freakyTractor</a></li>
-      </ul>
+        <h1 class="pageTitle">freakyTractor</h1>
+        <ul>
+            <li><a href="index.html">home</a></li>
+            <li><a href="freakytractor.html">freakyTractor</a></li>
+        </ul>
     </nav>
     <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
-  </body>
-  <script>
+</body>
+<script>
     // CANVAS VARIABLES
     const myCanvas = document.getElementById("myCanvas");
     const ctx = myCanvas.getContext("2d");
@@ -28,90 +29,107 @@
 
     ctx.globalCompositeOperation = "destination-over";
 
-    const gravity = { x: 0, y: 0.1 };
-    const ground = myCanvas.height;
+    const gravity = 0.1;
+    const gravitySpeed = 0;
     const bounce = 0.9;
 
     const playerImage = new Image();
     playerImage.src = "./imgs/player.png";
     playerImage.onload = function () {
-      //player
-      function Player() {
-        this.posx = myCanvas.width / 2;
-        this.posy = myCanvas.height / 2;
+        //player
+        function Player() {
+            this.posx = myCanvas.width / 2;
+            this.posy = myCanvas.height / 2;
 
-        this.img = playerImage;
-        this.width = 35;
-        this.height = 35;
-        this.velocityY = 0;
-        this.velocityX = 0;
-        this.scale = 3;
-        this.scaledWidth = this.scale * this.width;
-        this.scaledHeight = this.scale * this.height;
-        // this.playerDirection = 0
-        // this.steploop = [0,1,2]
+            this.img = playerImage;
+            this.width = 35;
+            this.height = 35;
+            this.speedY = 0;
+            this.speedX = 0;
+            this.scale = 3;
+            this.scaledWidth = this.scale * this.width;
+            this.scaledHeight = this.scale * this.height;
+            // this.playerDirection = 0
+            // this.steploop = [0,1,2]
 
-        Player.prototype.update = function () {
-          ctx.drawImage(
-            //image being used
-            this.img,
-            //xposition on image
-            0,
-            0,
-            //yposition on image
-            this.width,
-            this.height,
-            this.posx,
-            this.posy,
-            this.scaledWidth,
-            this.scaledHeight
-          );
-          this.velocityX += gravity.x;
-          this.velocityY += gravity.y;
-          this.posx += this.velocityX;
-          this.posy += this.velocityY;
-          const g = ground - this.scaledHeight;
-          console.log(g);
-          // console.log(myCanvas.height);
-          if (this.posy >= g) {
-            this.posy = g - (this.posy - ground - g);
-            this.velocityY = -Math.abs(this.velocityY) * bounce;
-            if (this.velocityY >= -gravity.y) {
-              this.velocityY = 0;
-              this.posy = g - gravity.y;
-            }
-          }
-        };
+            Player.prototype.update = function () {
+                ctx.drawImage(
+                    //image being used
+                    this.img,
+                    //xposition on image
+                    0,
+                    0,
+                    //yposition on image
+                    this.width,
+                    this.height,
+                    this.posx,
+                    this.posy,
+                    this.scaledWidth,
+                    this.scaledHeight
+                );
+                {
+                    this.gravitySpeed += this.gravity;
+                    this.posx += this.speedX;
+                    this.posy += this.speedY + this.gravitySpeed;
+                    this.hitBottom();
+                }
+                this.hitBottom = function () {
+                    var rockbottom = myCanvas.height - this.scaledheight;
+                    if (this.posy > rockbottom) {
+                        this.posy = rockbottom;
+                        this.gravitySpeed = -(this.gravitySpeed * this.bounce);
+                    }
+                }
 
-        Player.prototype.move = function () {
-          //player.movement
-          addEventListener("keydown", (e) => {
-            if (e.keyCode == 65) {
-              this.posx += -15;
-              console.log("a key was presssed");
-            }
-            if (e.keyCode == 68) {
-              this.posx += 15;
-            }
-          });
-        };
-      }
 
-      const player = new Player();
-      player.move();
 
-      //animationloop
-      function animate() {
+
+                //   this.velocityX += gravity.x;
+                //   this.velocityY += gravity.y;
+                //   this.posx += this.velocityX;
+                //   this.posy += this.velocityY;
+                //   const g = ground - this.scaledHeight;
+                //   console.log(g);
+                //   // console.log(myCanvas.height);
+                //   if (this.posy >= g) {
+                //     // this.posy = g - (this.posy - ground - g);
+                //     this.velocityY = -Math.abs(this.velocityY) * bounce;
+                //     if (this.velocityY >= -gravity.y) {
+                //       this.velocityY = 0;
+                //       this.posy = g + gravity.y;
+                //     }
+                //   }
+            };
+
+            Player.prototype.move = function () {
+                //player.movement
+                addEventListener("keydown", (e) => {
+                    if (e.keyCode == 65) {
+                        this.posx += -15;
+                        console.log("a key was presssed");
+                    }
+                    if (e.keyCode == 68) {
+                        this.posx += 15;
+                    }
+                });
+            };
+        }
+
+        const player = new Player();
+        player.move();
+
+        //animationloop
+        function animate() {
+            window.requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+            player.update();
+            // ctx.beginPath();
+            // ctx.fillStyle = "blue";
+            // ctx.fillRect(100, 300, 200, 200);
+            // ctx.stroke();
+        }
+
         window.requestAnimationFrame(animate);
-        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-        player.update();
-        // ctx.beginPath();
-        // ctx.fillStyle = "blue";
-        // ctx.fillRect(100, 300, 200, 200);
-        // ctx.stroke();
-      }
-
-      window.requestAnimationFrame(animate);
     };
 
     // const player = new Player();
@@ -122,5 +140,6 @@
     // ctx.fillStyle = "blue";
     // ctx.fillRect(100,300,200,200);
     // ctx.stroke();
-  </script>
+</script>
+
 </html>
