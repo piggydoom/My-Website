@@ -118,14 +118,14 @@
             if (!this.jumping) {
               this.posy -= this.jumpHeight;
               this.jumping = true;
-
-              if(this.y == this.rockbottom){
-                console.log("test");
+              console.log(this.posy);
+                console.log(this.rockbottom);
+              if(this.posy == this.rockbottom){
+               
                 this.jumping = false;
               }
             }}
-            console.log(this.poy + " is the player height");
-            console.log(this.rockbottom + " is rockbottom coords")
+            
 
           });
       };
