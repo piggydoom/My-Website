@@ -52,8 +52,8 @@
         this.scaledHeight = this.scale * this.height;
         this.jump = false;
         this.jumpHeight = 23;
-
-        // this.playerDirection = 0
+        this.jumpCounter = 0;
+         // this.playerDirection = 0
         // this.steploop = [0,1,2]
 
         Player.prototype.update = function () {
@@ -105,7 +105,12 @@
         };
 
         this.jump = function() {
-
+          if (this.jump){
+            this.jumpCounter++;
+          if(this.jumpCounter < 15){
+            this.posy -= this.jumpHeight;
+          }
+          }
         };        
 
         Player.prototype.move = function () {
