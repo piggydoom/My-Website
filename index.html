@@ -1,148 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FreakyTractor</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
 
-  <body>
-    <nav>
-      <h1 class="pageTitle">freakyTractor</h1>
-      <ul>
-        <li><a href="index.html">home</a></li>
-        <li><a href="freakytractor.html">freakyTractor</a></li>
-      </ul>
-    </nav>
-    <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
-  </body>
-  <script>
-    // CANVAS VARIABLES
-    const myCanvas = document.getElementById("myCanvas");
-    const ctx = myCanvas.getContext("2d");
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreakyTractor</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
 
-    myCanvas.width = window.innerWidth;
-    myCanvas.height = window.innerHeight;
+<body>
+  <nav>
+    <h1 class="pageTitle">freakyTractor</h1>
+    <ul>
+      <li><a href="index.html">home</a></li>
+      <li><a href="freakytractor.html">freakyTractor</a></li>
+    </ul>
+  </nav>
+  <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
+</body>
+<script>
+  // CANVAS VARIABLES
+  const myCanvas = document.getElementById("myCanvas");
+  const ctx = myCanvas.getContext("2d");
 
-    ctx.globalCompositeOperation = "destination-over";
+  myCanvas.width = window.innerWidth;
+  myCanvas.height = window.innerHeight;
 
-    const gravity = 0.1;
-    const gravitySpeed = 0;
-    const bounce = 0.9;
+  ctx.globalCompositeOperation = "destination-over";
 
-    const playerImage = new Image();
-    playerImage.src = "./imgs/player.png";
-    playerImage.onload = function () {
-      //player
-      function Player() {
-        this.posx = myCanvas.width / 2;
-        this.posy = myCanvas.height / 2;
+  const gravity = 0.1;
+  const gravitySpeed = 0;
+  const bounce = 0.9;
 
-        this.img = playerImage;
-        this.width = 32;
-        this.height = 32;
-        this.speedY = 0;
-        this.speedX = 0;
-        this.gravity =.1;
+  const playerImage = new Image();
+  playerImage.src = "./imgs/player.png";
+  playerImage.onload = function () {
+    //player
+    function Player() {
+      this.posx = myCanvas.width / 2;
+      this.posy = myCanvas.height / 2;
+
+      this.img = playerImage;
+      this.width = 32;
+      this.height = 32;
+      this.speedY = 0;
+      this.speedX = 0;
+      this.gravity = .1;
       this.gravitySpeed = 0;
-        this.scale = 3;
-        this.scaledWidth = this.scale * this.width;
-        this.scaledHeight = this.scale * this.height;
-        // this.playerDirection = 0
-        // this.steploop = [0,1,2]
+      this.scale = 3;
+      this.scaledWidth = this.scale * this.width;
+      this.scaledHeight = this.scale * this.height;
+      this.jump = false;
+      this.jumpHeight = 23;
+      // this.playerDirection = 0
+      // this.steploop = [0,1,2]
 
-        Player.prototype.update = function () {
-          ctx.drawImage(
-            //image being used
-            this.img,
-            //xposition on image
-            0,
-            0,
-            //yposition on image
-            this.width,
-            this.height,
-            this.posx,
-            this.posy,
-            this.scaledWidth,
-            this.scaledHeight
-          );
+      Player.prototype.update = function () {
+        ctx.drawImage(
+          //image being used
+          this.img,
+          //xposition on image
+          0,
+          0,
+          //yposition on image
+          this.width,
+          this.height,
+          this.posx,
+          this.posy,
+          this.scaledWidth,
+          this.scaledHeight
+        );
 
-          //   this.velocityX += gravity.x;
-          //   this.velocityY += gravity.y;
-          //   this.posx += this.velocityX;
-          //   this.posy += this.velocityY;
-          //   const g = ground - this.scaledHeight;
-          //   console.log(g);
-          //   // console.log(myCanvas.height);
-          //   if (this.posy >= g) {
-          //     // this.posy = g - (this.posy - ground - g);
-          //     this.velocityY = -Math.abs(this.velocityY) * bounce;
-          //     if (this.velocityY >= -gravity.y) {
-          //       this.velocityY = 0;
-          //       this.posy = g + gravity.y;
-          //     }
-          //   }
-        };
+        //   this.velocityX += gravity.x;
+        //   this.velocityY += gravity.y;
+        //   this.posx += this.velocityX;
+        //   this.posy += this.velocityY;
+        //   const g = ground - this.scaledHeight;
+        //   console.log(g);
+        //   // console.log(myCanvas.height);
+        //   if (this.posy >= g) {
+        //     // this.posy = g - (this.posy - ground - g);
+        //     this.velocityY = -Math.abs(this.velocityY) * bounce;
+        //     if (this.velocityY >= -gravity.y) {
+        //       this.velocityY = 0;
+        //       this.posy = g + gravity.y;
+        //     }
+        //   }
+      };
 
-        Player.prototype.newPos = function () {
-          this.gravitySpeed += this.gravity;
-          this.posx += this.speedX;
-          this.posy += this.speedY + this.gravitySpeed;
-          this.hitBottom();
-        };
-        this.hitBottom = function () {
-          var rockbottom = myCanvas.height - this.scaledHeight;
-          console.log(myCanvas.height);
-          if (this.posy > rockbottom) {
-            this.posy = rockbottom;
-            this.gravitySpeed = -(this.gravitySpeed * bounce);
+      Player.prototype.newPos = function () {
+        this.gravitySpeed += this.gravity;
+        this.posx += this.speedX;
+        this.posy += this.speedY + this.gravitySpeed;
+        this.hitBottom();
+      };
+      this.hitBottom = function () {
+        var rockbottom = myCanvas.height - this.scaledHeight;
+        console.log(myCanvas.height);
+        if (this.posy > rockbottom) {
+          this.posy = rockbottom;
+          this.gravitySpeed = -(this.gravitySpeed * bounce);
+        }
+      };
+
+      Player.prototype.move = function () {
+        //player.movement
+        addEventListener("keydown", (e) => {
+          if (e.keyCode == 65) {
+            this.posx += -15;
+            console.log("a key was presssed");
           }
-        };
+          if (e.keyCode == 68) {
+            this.posx += 15;
+          }
+          if (e.keyCode == 87) {
+            if (!this.jumping) {
+              this.posy -= this.jumpHeight;
+              this.jumping = true;
 
-        Player.prototype.move = function () {
-          //player.movement
-          addEventListener("keydown", (e) => {
-            if (e.keyCode == 65) {
-              this.posx += -15;
-              console.log("a key was presssed");
-            }
-            if (e.keyCode == 68) {
-              this.posx += 15;
-            }
-            if(e.keyCode == 87 && this.gravitySpeed == 0){
-                this.posy +=20;
-            }
+
+
+              setTimeout(() => {
+                this.posy = this.jumpHeight;
+                this.jumping = false;
+              }, 500);
+            }}
+            console.log(this.gravitySpeed + "gravityspeed");
+
           });
-        };
-      }
+      };
+    }
 
-      const player = new Player();
-      player.move();
+    const player = new Player();
+    player.move();
 
-      //animationloop
-      function animate() {
-        window.requestAnimationFrame(animate);
-        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-        player.newPos();
-        player.update();
-        // ctx.beginPath();
-        // ctx.fillStyle = "blue";
-        // ctx.fillRect(100, 300, 200, 200);
-        // ctx.stroke();
-      }
-
+    //animationloop
+    function animate() {
       window.requestAnimationFrame(animate);
-    };
+      ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+      player.newPos();
+      player.update();
+      // ctx.beginPath();
+      // ctx.fillStyle = "blue";
+      // ctx.fillRect(100, 300, 200, 200);
+      // ctx.stroke();
+    }
 
-    // const player = new Player();
-    // player.draw(0,0);
+    window.requestAnimationFrame(animate);
+  };
 
-    // ctx.drawImage(img,100,100);
-    // ctx.beginPath();
-    // ctx.fillStyle = "blue";
-    // ctx.fillRect(100,300,200,200);
-    // ctx.stroke();
-  </script>
+  // const player = new Player();
+  // player.draw(0,0);
+
+  // ctx.drawImage(img,100,100);
+  // ctx.beginPath();
+  // ctx.fillStyle = "blue";
+  // ctx.fillRect(100,300,200,200);
+  // ctx.stroke();
+</script>
+
 </html>
