@@ -53,7 +53,7 @@
       this.scaledHeight = this.scale * this.height;
       this.jump = false;
       this.jumpHeight = 23;
-      var rockbottom = myCanvas.height - this.scaledHeight;
+
       // this.playerDirection = 0
       // this.steploop = [0,1,2]
 
@@ -97,6 +97,7 @@
         this.hitBottom();
       };
       this.hitBottom = function () {
+        var rockbottom = myCanvas.height - this.scaledHeight;
         console.log(myCanvas.height);
         if (this.posy > rockbottom) {
           this.posy = rockbottom;
@@ -118,9 +119,11 @@
             if (!this.jumping) {
               this.posy -= this.jumpHeight;
               this.jumping = true;
-              console.log(this.posy);
-                console.log(this.rockbottom);
-              if(this.posy == this.rockbottom){
+              var rockbottom = myCanvas.height - this.scaledHeight;
+
+              console.log(this.posy + " posy");
+              console.log(rockbottom + " rockbottom");
+              if(this.posy <= 383){
                
                 this.jumping = false;
               }
