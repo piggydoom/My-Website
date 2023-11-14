@@ -31,7 +31,7 @@
 
   const gravity = 0.1;
   const gravitySpeed = 0;
-  const bounce = 0.9;
+  const bounce = 0.3;
 
   const playerImage = new Image();
   playerImage.src = "./imgs/player.png";
@@ -53,6 +53,7 @@
       this.scaledHeight = this.scale * this.height;
       this.jump = false;
       this.jumpHeight = 23;
+      var rockbottom = myCanvas.height - this.scaledHeight;
       // this.playerDirection = 0
       // this.steploop = [0,1,2]
 
@@ -96,7 +97,6 @@
         this.hitBottom();
       };
       this.hitBottom = function () {
-        var rockbottom = myCanvas.height - this.scaledHeight;
         console.log(myCanvas.height);
         if (this.posy > rockbottom) {
           this.posy = rockbottom;
@@ -119,14 +119,13 @@
               this.posy -= this.jumpHeight;
               this.jumping = true;
 
-
-
-              setTimeout(() => {
-                this.posy = this.jumpHeight;
+              if(this.y == this.rockbottom){
+                console.log("test");
                 this.jumping = false;
-              }, 500);
+              }
             }}
-            console.log(this.gravitySpeed + "gravityspeed");
+            console.log(this.poy + " is the player height");
+            console.log(this.rockbottom + " is rockbottom coords")
 
           });
       };
