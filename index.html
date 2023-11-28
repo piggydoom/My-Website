@@ -52,7 +52,7 @@
       this.scaledWidth = this.scale * this.width;
       this.scaledHeight = this.scale * this.height;
       this.isJumping = false;
-      this.jumpHeight = -23;
+      this.jumpHeight = -5;
       this.jumpCounter = 0;
       // this.playerDirection = 0
       // this.steploop = [0,1,2]
@@ -73,6 +73,8 @@
           this.scaledHeight
         );
 
+        this.move();
+        this.jump();
         //   this.velocityX += gravity.x;
         //   this.velocityY += gravity.y;
         //   this.posx += this.velocityX;
@@ -111,10 +113,11 @@
         if (this.isJumping) {
           
           //stop the player jumping again
-          this.isJumping = false;
+          // this.isJumping = false;
           //check how many frames the player has been jumping
-          if (this.jumpCounter < 50) {
+          if (this.jumpCounter < 500) {
             this.posy += this.jumpHeight;
+            console.log(this.posy);
           }
           
         };
@@ -136,14 +139,13 @@
             this.jumpCounter = 0;
 
           }
-          this.jump();
         });
         
       };
     }
 
     const player = new Player();
-    player.move();
+
 
    
 
