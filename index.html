@@ -29,9 +29,9 @@
 
   ctx.globalCompositeOperation = "destination-over";
 
-  const gravity = 0.1;
+  const gravity = 0.07;
   const gravitySpeed = 0;
-  const bounce = 0.3;
+  const bounce = 0.1;
 
   const playerImage = new Image();
   playerImage.src = "./imgs/player.png";
@@ -52,17 +52,17 @@
       this.scaledWidth = this.scale * this.width;
       this.scaledHeight = this.scale * this.height;
       this.isJumping = false;
-      this.jumpHeight = -5;
-      this.jumpCounter = 0;
-      // this.playerDirection = 0
-      // this.steploop = [0,1,2]
+      this.jumpSpeed = -5;
+      this.frameCounter = 0;
+      this.cycleLoop = [0, 1];
+      this.currentLoopIndex = 0;
 
       Player.prototype.update = function () {
         ctx.drawImage(
           //image being used
           this.img,
           //xposition on image
-          0,
+          this.cycleLoop[this.currentLoopIndex] * this.width,
           0,
           //yposition on image
           this.width,
@@ -72,29 +72,18 @@
           this.scaledWidth,
           this.scaledHeight
         );
-
+        // this.currentLoopIndex++;
+        if(this.currentLoopIndex >= this.cycleLoop.length){
+          this.currentLoopIndex = 0;
+        }
 
         this.jump();
-        //   this.velocityX += gravity.x;
-        //   this.velocityY += gravity.y;
-        //   this.posx += this.velocityX;
-        //   this.posy += this.velocityY;
-        //   const g = ground - this.scaledHeight;
-        //   console.log(g);
-        //   // console.log(myCanvas.height);
-        //   if (this.posy >= g) {
-        //     // this.posy = g - (this.posy - ground - g);
-        //     this.velocityY = -Math.abs(this.velocityY) * bounce;
-        //     if (this.velocityY >= -gravity.y) {
-        //       this.velocityY = 0;
-        //       this.posy = g + gravity.y;
-        //     }
-        //   }
+        
       };
 
       Player.prototype.newPos = function () {
         this.gravitySpeed += this.gravity;
-        this.posx += this.speedX;
+        // this.posx += this.speedX;
         this.posy += this.speedY + this.gravitySpeed;
         this.hitBottom();
       };
@@ -115,8 +104,8 @@
           //stop the player jumping again
           // this.isJumping = false;
           //check how many frames the player has been jumping
-          if (this.jumpCounter < 500) {
-            this.posy += this.jumpHeight;
+          if (this.frameCounter < 500) {
+            this.posy += this.jumpSpeed;
             console.log(this.posy + "UP DOWN Y pos");
           }
           
@@ -137,7 +126,7 @@
           if (e.keyCode == 87) {
             console.log("w key was presssed");
             this.isJumping = true;
-            this.jumpCounter = 0;
+            this.frameCounter = 0;
 
           }
         });
@@ -158,8 +147,11 @@
       ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
       player.newPos();
       player.update();
-      player.jumpCounter++;
-      
+      player.frameCounter++;
+      // if(player.frameCounter %  5==0){
+      //   player.currentLoopIndex++;
+      // }
+      player.currentLoopIndex++;
 
     }
 
