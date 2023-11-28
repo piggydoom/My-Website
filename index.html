@@ -73,7 +73,7 @@
           this.scaledHeight
         );
 
-        this.move();
+
         this.jump();
         //   this.velocityX += gravity.x;
         //   this.velocityY += gravity.y;
@@ -100,7 +100,7 @@
       };
       this.hitBottom = function () {
         var rockbottom = myCanvas.height - this.scaledHeight;
-        console.log(myCanvas.height);
+        // console.log(myCanvas.height);
         if (this.posy > rockbottom) {
           this.posy = rockbottom;
           this.gravitySpeed = -(this.gravitySpeed * bounce);
@@ -117,7 +117,7 @@
           //check how many frames the player has been jumping
           if (this.jumpCounter < 500) {
             this.posy += this.jumpHeight;
-            console.log(this.posy);
+            console.log(this.posy + "UP DOWN Y pos");
           }
           
         };
@@ -128,10 +128,11 @@
         addEventListener("keydown", (e) => {
           if (e.keyCode == 65) {
             this.posx += -15;
-            console.log("a key was presssed");
+            console.log(this.posx + "Sideways xpos");
           }
           if (e.keyCode == 68) {
             this.posx += 15;
+            console.log(this.posx + "Sideways xpos");
           }
           if (e.keyCode == 87) {
             console.log("w key was presssed");
@@ -145,7 +146,7 @@
     }
 
     const player = new Player();
-
+    player.move();
 
    
 
@@ -158,23 +159,13 @@
       player.newPos();
       player.update();
       player.jumpCounter++;
-      // ctx.beginPath();
-      // ctx.fillStyle = "blue";
-      // ctx.fillRect(100, 300, 200, 200);
-      // ctx.stroke();
+      
+
     }
 
     window.requestAnimationFrame(animate);
   };
 
-  // const player = new Player();
-  // player.draw(0,0);
-
-  // ctx.drawImage(img,100,100);
-  // ctx.beginPath();
-  // ctx.fillStyle = "blue";
-  // ctx.fillRect(100,300,200,200);
-  // ctx.stroke();
 </script>
 
 </html>
