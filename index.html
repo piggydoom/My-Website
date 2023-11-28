@@ -105,13 +105,18 @@
         }
       };
 
+      //this function makes the player jump
       this.jump = function () {
+        //check if player should be jumping
         if (this.isJumping) {
-
-          if (this.jumpCounter < 15) {
+          
+          //stop the player jumping again
+          this.isJumping = false;
+          //check how many frames the player has been jumping
+          if (this.jumpCounter < 50) {
             this.posy += this.jumpHeight;
           }
-          this.isJumping = false;
+          
         };
       }
 
@@ -131,14 +136,16 @@
             this.jumpCounter = 0;
 
           }
+          this.jump();
         });
+        
       };
     }
 
     const player = new Player();
     player.move();
 
-    player.jump();
+   
 
 
 
