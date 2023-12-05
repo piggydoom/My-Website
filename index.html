@@ -29,9 +29,10 @@
 
   ctx.globalCompositeOperation = "destination-over";
 
-  const gravity = 0.07;
-  const gravitySpeed = 0;
-  const bounce = 0.1;
+  let frameCount;
+  const gravity = 0.9;
+  let gravitySpeed = 0;
+  const bounce = 0.07;
 
   const playerImage = new Image();
   playerImage.src = "./imgs/player.png";
@@ -46,16 +47,14 @@
       this.height = 32;
       this.speedY = 0;
       this.speedX = 0;
-      this.gravity = 0.1;
-      this.gravitySpeed = 0;
       this.scale = 3;
       this.scaledWidth = this.scale * this.width;
       this.scaledHeight = this.scale * this.height;
       this.isJumping = false;
       this.jumpSpeed = -5;
-      this.frameCounter = 0;
-      this.cycleLoop = [0, 1];
+      this.cycleLoop = [0, 1, 2, 3];
       this.currentLoopIndex = 0;
+      this.playerDirection = 0;
 
       Player.prototype.update = function () {
         ctx.drawImage(
@@ -63,8 +62,8 @@
           this.img,
           //xposition on image
           this.cycleLoop[this.currentLoopIndex] * this.width,
-          0,
           //yposition on image
+          this.playerDirection * this.width,
           this.width,
           this.height,
           this.posx,
@@ -72,19 +71,16 @@
           this.scaledWidth,
           this.scaledHeight
         );
-        // this.currentLoopIndex++;
-        if(this.currentLoopIndex >= this.cycleLoop.length){
-          this.currentLoopIndex = 0;
-        }
+
 
         this.jump();
-        
+
       };
 
       Player.prototype.newPos = function () {
-        this.gravitySpeed += this.gravity;
+        gravitySpeed += gravity;
         // this.posx += this.speedX;
-        this.posy += this.speedY + this.gravitySpeed;
+        this.posy += this.speedY + gravitySpeed;
         this.hitBottom();
       };
       this.hitBottom = function () {
@@ -92,7 +88,7 @@
         // console.log(myCanvas.height);
         if (this.posy > rockbottom) {
           this.posy = rockbottom;
-          this.gravitySpeed = -(this.gravitySpeed * bounce);
+          gravitySpeed = -(gravitySpeed * bounce);
         }
       };
 
@@ -100,15 +96,15 @@
       this.jump = function () {
         //check if player should be jumping
         if (this.isJumping) {
-          
+
           //stop the player jumping again
           // this.isJumping = false;
           //check how many frames the player has been jumping
-          if (this.frameCounter < 500) {
+          if (this.jumpCounter < 500) {
             this.posy += this.jumpSpeed;
             console.log(this.posy + "UP DOWN Y pos");
           }
-          
+
         };
       }
 
@@ -116,43 +112,53 @@
         //player.movement
         addEventListener("keydown", (e) => {
           if (e.keyCode == 65) {
+            this.playerDirection = 0;
             this.posx += -15;
             console.log(this.posx + "Sideways xpos");
           }
           if (e.keyCode == 68) {
+            this.playerDirection = 1;
             this.posx += 15;
             console.log(this.posx + "Sideways xpos");
           }
           if (e.keyCode == 87) {
+            this.playerDirection = 2;
             console.log("w key was presssed");
             this.isJumping = true;
-            this.frameCounter = 0;
+            this.jumpCounter = 0;
 
           }
         });
-        
+
       };
     }
 
     const player = new Player();
     player.move();
 
-   
+
 
 
 
     //animationloop
     function animate() {
-      window.requestAnimationFrame(animate);
+      frameCount++; 
+      if(frameCount < 3){
+        window.requestAnimationFrame(animate);
+        return;
+      }
+      frameCount = 0;
       ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
       player.newPos();
       player.update();
-      player.frameCounter++;
-      // if(player.frameCounter %  5==0){
+   player.currentLoopIndex++;
+   if (player.currentLoopIndex >= player.cycleLoop.length){
+    player.currentLoopIndex=0;
+   }
+      // if(player.jumpCounter %  5==0){
       //   player.currentLoopIndex++;
       // }
-      player.currentLoopIndex++;
-
+      window.requestAnimationFrame(animate);
     }
 
     window.requestAnimationFrame(animate);
