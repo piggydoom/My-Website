@@ -32,7 +32,7 @@
   let frameCount;
   const gravity = 0.9;
   let gravitySpeed = 0;
-  const bounce = 0.07;
+  const bounce = 0.01;
 
   const playerImage = new Image();
   playerImage.src = "./imgs/player.png";
@@ -100,9 +100,10 @@
           //stop the player jumping again
           // this.isJumping = false;
           //check how many frames the player has been jumping
-          if (this.jumpCounter < 500) {
+          // this.isJumping = false;
+          if (this.jumpCounter < 100) {
             this.posy += this.jumpSpeed;
-            console.log(this.posy + "UP DOWN Y pos");
+            console.log(this.posy + "UP DOWN Y pos JumpCounter = " + this.jumpCounter);
           }
 
         };
@@ -143,7 +144,8 @@
     //animationloop
     function animate() {
       frameCount++; 
-      if(frameCount < 3){
+      player.jumpCounter++;
+      if(frameCount < 10){
         window.requestAnimationFrame(animate);
         return;
       }
@@ -155,9 +157,6 @@
    if (player.currentLoopIndex >= player.cycleLoop.length){
     player.currentLoopIndex=0;
    }
-      // if(player.jumpCounter %  5==0){
-      //   player.currentLoopIndex++;
-      // }
       window.requestAnimationFrame(animate);
     }
 
