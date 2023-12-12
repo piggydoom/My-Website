@@ -95,15 +95,17 @@
       //this function makes the player jump
       this.jump = function () {
         //check if player should be jumping
-        if (this.isJumping) {
-
+        if (this.isJumping == true) {
+         this.isJumping = false;
           //stop the player jumping again
           // this.isJumping = false;
           //check how many frames the player has been jumping
           // this.isJumping = false;
           if (this.jumpCounter < 100) {
+          if (this.jumpCounter < 200) {
             this.posy += this.jumpSpeed;
             console.log(this.posy + "UP DOWN Y pos JumpCounter = " + this.jumpCounter);
+            console.log(this.posy + "UP DOWN Y pos" + this.jumpCounter);
           }
 
         };
@@ -113,7 +115,7 @@
         //player.movement
         addEventListener("keydown", (e) => {
           if (e.keyCode == 65) {
-            this.playerDirection = 0;
+            this.playerDirection = 2;
             this.posx += -15;
             console.log(this.posx + "Sideways xpos");
           }
@@ -123,10 +125,10 @@
             console.log(this.posx + "Sideways xpos");
           }
           if (e.keyCode == 87) {
-            this.playerDirection = 2;
+            this.playerDirection = 3;
             console.log("w key was presssed");
             this.isJumping = true;
-            this.jumpCounter = 0;
+            this.frameCount = 0;
 
           }
         });
@@ -145,7 +147,7 @@
     function animate() {
       frameCount++; 
       player.jumpCounter++;
-      if(frameCount < 10){
+      if(frameCount < 3){
         window.requestAnimationFrame(animate);
         return;
       }
