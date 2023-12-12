@@ -96,16 +96,14 @@
       this.jump = function () {
         //check if player should be jumping
         if (this.isJumping == true) {
-         this.isJumping = false;
+        //  this.isJumping = false;
           //stop the player jumping again
           // this.isJumping = false;
           //check how many frames the player has been jumping
           // this.isJumping = false;
           if (this.jumpCounter < 100) {
-          if (this.jumpCounter < 200) {
             this.posy += this.jumpSpeed;
             console.log(this.posy + "UP DOWN Y pos JumpCounter = " + this.jumpCounter);
-            console.log(this.posy + "UP DOWN Y pos" + this.jumpCounter);
           }
 
         };
@@ -147,7 +145,7 @@
     function animate() {
       frameCount++; 
       player.jumpCounter++;
-      if(frameCount < 3){
+      if(frameCount < 15){
         window.requestAnimationFrame(animate);
         return;
       }
