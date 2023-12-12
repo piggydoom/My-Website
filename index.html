@@ -11,11 +11,15 @@
 
 <body>
   <nav>
-    <h1 class="pageTitle">freakyTractor</h1>
-    <ul>
-      <li><a href="index.html">home</a></li>
-      <li><a href="freakytractor.html">freakyTractor</a></li>
-    </ul>
+    <div class="heading">
+      <h1 class="pageTitle">freakyTractor</h1>
+    </div>
+    <div class="navlinks">
+      <ul>
+        <li><a href="index.html">home</a></li>
+        <li><a href="freakytractor.html">freakyTractor</a></li>
+      </ul>
+    </div>
   </nav>
   <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
 </body>
@@ -96,7 +100,7 @@
       this.jump = function () {
         //check if player should be jumping
         if (this.isJumping == true) {
-         this.isJumping = false;
+          this.isJumping = false;
           //stop the player jumping again
           // this.isJumping = false;
           //check how many frames the player has been jumping
@@ -142,9 +146,9 @@
 
     //animationloop
     function animate() {
-      frameCount++; 
+      frameCount++;
       player.jumpCounter++;
-      if(frameCount < 3){
+      if (frameCount < 3) {
         window.requestAnimationFrame(animate);
         return;
       }
@@ -152,10 +156,10 @@
       ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
       player.newPos();
       player.update();
-   player.currentLoopIndex++;
-   if (player.currentLoopIndex >= player.cycleLoop.length){
-    player.currentLoopIndex=0;
-   }
+      player.currentLoopIndex++;
+      if (player.currentLoopIndex >= player.cycleLoop.length) {
+        player.currentLoopIndex = 0;
+      }
       // if(player.frameCount %  5==0){
       //   player.currentLoopIndex++;
       // }
