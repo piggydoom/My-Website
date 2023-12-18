@@ -43,6 +43,7 @@
   playerImage.onload = function () {
     //player
     function Player() {
+      var rockbottom = myCanvas.height - this.scaledHeight;
       this.posx = myCanvas.width / 2;
       this.posy = myCanvas.height / 2;
 
@@ -88,7 +89,6 @@
         this.hitBottom();
       };
       this.hitBottom = function () {
-        var rockbottom = myCanvas.height - this.scaledHeight;
         // console.log(myCanvas.height);
         if (this.posy > rockbottom) {
           this.posy = rockbottom;
@@ -98,23 +98,15 @@
 
       //this function makes the player jump
       this.jump = function () {
+        var rockbottom = myCanvas.height - this.scaledHeight;
+
         //check if player should be jumping
         if (this.isJumping == true) {
-          
-          //stop the player jumping again
-          // this.isJumping = false;
-          //check how many frames the player has been jumping
-          // this.isJumping = false;
-          console.log(this.jumpCounter + " frames past since jump");
-          if (this.jumpCounter < 100) {
+          if (this.jumpCounter < 30) {
             this.posy += this.jumpSpeed;
-
-          }
-          if (this.jumpCounter > 100){
-          this.isJumping = false;
-          this.playerDirection = 0;
           }
         };
+
       }
 
       Player.prototype.move = function () {
@@ -130,15 +122,13 @@
             this.posx += 15;
             console.log(this.posx + "Sideways xpos");
           }
-          if (!this.isJumping) {
             if (e.keyCode == 87) {
+              // check if player is on rockbottom
               this.playerDirection = 3;
               console.log("w key was presssed");
               this.isJumping = true;
               this.jumpCounter = 0;
-
             }
-          }
         });
 
       };
