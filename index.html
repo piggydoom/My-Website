@@ -55,7 +55,7 @@
       this.scaledWidth = this.scale * this.width;
       this.scaledHeight = this.scale * this.height;
       this.isJumping = false;
-      this.jumpSpeed = -5;
+      this.jumpSpeed = -30;
       this.cycleLoop = [0, 1, 2, 3];
       this.currentLoopIndex = 0;
       this.playerDirection = 0;
@@ -100,16 +100,18 @@
       this.jump = function () {
         //check if player should be jumping
         if (this.isJumping == true) {
-          this.isJumping = false;
+          
           //stop the player jumping again
           // this.isJumping = false;
           //check how many frames the player has been jumping
           // this.isJumping = false;
-          if (this.jumpCounter < 100) {
+          console.log(this.jumpCounter + " frames past since jump");
+          if (this.jumpCounter < 500) {
             this.posy += this.jumpSpeed;
-            console.log(this.posy + "UP DOWN Y pos JumpCounter = " + this.jumpCounter);
-          }
 
+          }
+          this.isJumping = false;
+          this.playerDirection = 0;
         };
       }
 
@@ -126,12 +128,14 @@
             this.posx += 15;
             console.log(this.posx + "Sideways xpos");
           }
-          if (e.keyCode == 87) {
-            this.playerDirection = 3;
-            console.log("w key was presssed");
-            this.isJumping = true;
-            this.frameCount = 0;
+          if (!this.isJumping) {
+            if (e.keyCode == 87) {
+              this.playerDirection = 3;
+              console.log("w key was presssed");
+              this.isJumping = true;
+              this.jumpCounter = 0;
 
+            }
           }
         });
 
@@ -149,6 +153,8 @@
     function animate() {
       frameCount++;
       player.jumpCounter++;
+      console.log(player.jumpCounter);
+      console.log(player.isJumping);
       if (frameCount < 3) {
         window.requestAnimationFrame(animate);
         return;
