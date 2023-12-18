@@ -106,12 +106,14 @@
           //check how many frames the player has been jumping
           // this.isJumping = false;
           console.log(this.jumpCounter + " frames past since jump");
-          if (this.jumpCounter < 500) {
+          if (this.jumpCounter < 100) {
             this.posy += this.jumpSpeed;
 
           }
+          if (this.jumpCounter > 100){
           this.isJumping = false;
           this.playerDirection = 0;
+          }
         };
       }
 
