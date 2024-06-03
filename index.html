@@ -1,127 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreakyTractor</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreakyTractor</title>
-  <link rel="stylesheet" href="/css/style.css" />
-</head>
+  <body>
+    <nav>
+      <div class="heading">
+        <h1 class="pageTitle">freakyTractor</h1>
+      </div>
+      <div class="navlinks">
+        <ul>
+          <li><a href="index.html">home</a></li>
+          <li><a href="freakytractor.html">freakyTractor</a></li>
+        </ul>
+      </div>
+    </nav>
+    <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
+  </body>
+  <script>
+    // CANVAS VARIABLES
+    const myCanvas = document.getElementById("myCanvas");
+    const ctx = myCanvas.getContext("2d");
 
-<body>
-  <nav>
-    <div class="heading">
-      <h1 class="pageTitle">freakyTractor</h1>
-    </div>
-    <div class="navlinks">
-      <ul>
-        <li><a href="index.html">home</a></li>
-        <li><a href="freakytractor.html">freakyTractor</a></li>
-      </ul>
-    </div>
-  </nav>
-  <canvas id="myCanvas" style="border: 1px solid orange"></canvas>
-</body>
-<script>
-  // CANVAS VARIABLES
-  const myCanvas = document.getElementById("myCanvas");
-  const ctx = myCanvas.getContext("2d");
+    myCanvas.width = window.innerWidth;
+    myCanvas.height = window.innerHeight;
 
-  myCanvas.width = window.innerWidth;
-  myCanvas.height = window.innerHeight;
+    ctx.globalCompositeOperation = "destination-over";
 
-  ctx.globalCompositeOperation = "destination-over";
+    let frameCount;
+    const gravity = 0.9;
+    let gravitySpeed = 0;
+    const bounce = 0.01;
 
-  let frameCount;
-  const gravity = 0.9;
-  let gravitySpeed = 0;
-  const bounce = 0.01;
-
-  const playerImage = new Image();
-  playerImage.src = "./imgs/player.png";
-  playerImage.onload = function () {
-    //player
-    function Player() {
-      var rockbottom = myCanvas.height - this.scaledHeight;
-      this.posx = myCanvas.width / 2;
-      this.posy = myCanvas.height / 2;
-
-      this.img = playerImage;
-      this.width = 32;
-      this.height = 32;
-      this.speedY = 0;
-      this.speedX = 0;
-      this.scale = 3;
-      this.scaledWidth = this.scale * this.width;
-      this.scaledHeight = this.scale * this.height;
-      this.isJumping = false;
-      this.jumpSpeed = -30;
-      this.cycleLoop = [0, 1, 2, 3];
-      this.currentLoopIndex = 0;
-      this.playerDirection = 0;
-
-      Player.prototype.update = function () {
-        ctx.drawImage(
-          //image being used
-          this.img,
-          //xposition on image
-          this.cycleLoop[this.currentLoopIndex] * this.width,
-          //yposition on image
-          this.playerDirection * this.width,
-          this.width,
-          this.height,
-          this.posx,
-          this.posy,
-          this.scaledWidth,
-          this.scaledHeight
-        );
-
-
-        this.jump();
-
-      };
-
-      Player.prototype.newPos = function () {
-        gravitySpeed += gravity;
-        // this.posx += this.speedX;
-        this.posy += this.speedY + gravitySpeed;
-        this.hitBottom();
-      };
-      this.hitBottom = function () {
-        // console.log(myCanvas.height);
-        if (this.posy > rockbottom) {
-          this.posy = rockbottom;
-          gravitySpeed = -(gravitySpeed * bounce);
-        }
-      };
-
-      //this function makes the player jump
-      this.jump = function () {
+    const playerImage = new Image();
+    playerImage.src = "./imgs/player.png";
+    playerImage.onload = function () {
+      //player
+      function Player() {
         var rockbottom = myCanvas.height - this.scaledHeight;
+        this.posx = myCanvas.width / 2;
+        this.posy = myCanvas.height / 2;
 
-        //check if player should be jumping
-        if (this.isJumping == true) {
-          if (this.jumpCounter < 30) {
-            this.posy += this.jumpSpeed;
+        this.img = playerImage;
+        this.width = 32;
+        this.height = 32;
+        this.speedY = 0;
+        this.speedX = 0;
+        this.scale = 3;
+        this.scaledWidth = this.scale * this.width;
+        this.scaledHeight = this.scale * this.height;
+        this.isJumping = false;
+        this.jumpSpeed = -30;
+        this.cycleLoop = [0, 1, 2, 3];
+        this.currentLoopIndex = 0;
+        this.playerDirection = 0;
+
+        Player.prototype.update = function () {
+          ctx.drawImage(
+            //image being used
+            this.img,
+            //xposition on image
+            this.cycleLoop[this.currentLoopIndex] * this.width,
+            //yposition on image
+            this.playerDirection * this.width,
+            this.width,
+            this.height,
+            this.posx,
+            this.posy,
+            this.scaledWidth,
+            this.scaledHeight
+          );
+
+          this.jump();
+        };
+
+        Player.prototype.newPos = function () {
+          gravitySpeed += gravity;
+          // this.posx += this.speedX;
+          this.posy += this.speedY + gravitySpeed;
+          this.hitBottom();
+        };
+        this.hitBottom = function () {
+          // console.log(myCanvas.height);
+          if (this.posy > rockbottom) {
+            this.posy = rockbottom;
+            gravitySpeed = -(gravitySpeed * bounce);
           }
         };
 
-      }
+        //this function makes the player jump
+        this.jump = function () {
+          var rockbottom = myCanvas.height - this.scaledHeight;
 
-      Player.prototype.move = function () {
-        //player.movement
-        addEventListener("keydown", (e) => {
-          if (e.keyCode == 65) {
-            this.playerDirection = 2;
-            this.posx += -15;
-            console.log(this.posx + "Sideways xpos");
+          //check if player should be jumping
+          if (this.isJumping == true) {
+            if (this.jumpCounter < 30) {
+              this.posy += this.jumpSpeed;
+            }
           }
-          if (e.keyCode == 68) {
-            this.playerDirection = 1;
-            this.posx += 15;
-            console.log(this.posx + "Sideways xpos");
-          }
+        };
+
+        Player.prototype.move = function () {
+          //player.movement
+          addEventListener("keydown", (e) => {
+            if (e.keyCode == 65) {
+              this.playerDirection = 2;
+              this.posx += -15;
+              console.log(this.posx + "Sideways xpos");
+            }
+            if (e.keyCode == 68) {
+              this.playerDirection = 1;
+              this.posx += 15;
+              console.log(this.posx + "Sideways xpos");
+            }
             if (e.keyCode == 87) {
               // check if player is on rockbottom
               this.playerDirection = 3;
@@ -129,45 +125,40 @@
               this.isJumping = true;
               this.jumpCounter = 0;
             }
-        });
+          });
+        };
+      }
 
-      };
-    }
+      const player = new Player();
+      player.move();
 
-    const player = new Player();
-    player.move();
-
-
-
-
-
-    //animationloop
-    function animate() {
-      frameCount++;
-      player.jumpCounter++;
-      console.log(player.jumpCounter);
-      console.log(player.isJumping);
-      if (frameCount < 3) {
+      //animationloop
+      function animate() {
+        frameCount++;
+        player.jumpCounter++;
+        console.log(player.jumpCounter);
+        console.log(player.isJumping);
+        if (frameCount < 3) {
+          window.requestAnimationFrame(animate);
+          return;
+        }
+        frameCount = 0;
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        player.newPos();
+        player.update();
+        player.currentLoopIndex++;
+        if (player.currentLoopIndex >= player.cycleLoop.length) {
+          player.currentLoopIndex = 0;
+        }
+        // if(player.frameCount %  5==0){
+        //   player.currentLoopIndex++;
+        // }
         window.requestAnimationFrame(animate);
-        return;
       }
-      frameCount = 0;
-      ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-      player.newPos();
-      player.update();
-      player.currentLoopIndex++;
-      if (player.currentLoopIndex >= player.cycleLoop.length) {
-        player.currentLoopIndex = 0;
-      }
-      // if(player.frameCount %  5==0){
-      //   player.currentLoopIndex++;
-      // }
+
       window.requestAnimationFrame(animate);
-    }
-
-    window.requestAnimationFrame(animate);
-  };
-
-</script>
-
+    };
+  </script>
 </html>
+
+<!-- Write your comments here -->
